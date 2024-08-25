@@ -1,0 +1,190 @@
+Typescript
+----------
+    - Superset of javascript
+    - Enable strict typing for Javascript
+    - Provide type safety
+    - Increase the coding experience for the programmers
+    - Detects errors before compilation
+    - It needs to convert to JS before running
+    - When compile to JS it removes all typing
+
+Types in TS
+-----------
+    Primitive Types
+        - "number"
+        - "string"
+        - "boolean"
+        - "void" - absence of any type
+        - "null" and "undefined" - absence of a value
+        - "any" - it can be any type(not recommended)
+    
+    Object Types
+        - 
+
+
+Infer Types
+-----------
+    - There is no need to explicitly mention the type of a variable , the TS compiler determine the type of the variable automatically by the value assigned to it.
+
+    Cases when TS compiler infer Type
+    ---------------------------------
+
+        - Variable Inference
+            let num = 42; // TypeScript infers 'num' as 'number'
+            let greeting = "Hello"; // TypeScript infers 'greeting' as 'string'
+        
+        - Function Return Type Inference
+            function add(a: number, b: number) {
+                return a + b; // TypeScript infers the return type as 'number'
+            }
+        
+        - Contextual Typing
+            let callback = (message: string) => console.log(message);
+            document.addEventListener('click', callback); // TypeScript infers 'callback' as (event: MouseEvent) => void
+        
+        - Array and Object Literals
+            let numbers = [1, 2, 3]; // TypeScript infers 'numbers' as 'number[]'
+            let person = { name: "Alice", age: 30 }; // TypeScript infers 'person' as '{ name: string; age: number }'
+        
+        - Default Values
+            function greet(name = "Guest") {
+                console.log(`Hello, ${name}`);
+            }
+            // TypeScript infers 'name' as 'string'
+
+
+Explicit Typing
+---------------
+    - We explicitly mention the type of the variable and other parameters when we define them
+    - Variable
+        let age: number = 25;
+        let name: string = 'Alice';
+    
+    - Function Parameters and Return Types
+        function greet(name: string): string {
+            return `Hello, ${name}!`;
+        }
+    
+    - Objects and Arrays
+        // Explicitly typing an object
+        let person: { name: string; age: number } = {
+            name: 'Bob',
+            age: 30
+        };
+
+        // Explicitly typing an array
+        let numbers: number[] = [1, 2, 3, 4];
+
+
+
+Interface
+---------
+    - Interface is the structure of an object or class
+    - It define the types for the parameters inside an object or class
+    - When we use class we use "implements" keyword to specify the Interface
+        class Employee implements Person {
+            // Body of the class
+        }
+        
+    - In object we can simply assign the interface using the colon
+    - "readonly" - Properties can be marked as read-only, meaning they cannot be changed once initialized.
+        interface Person {
+            readonly id: number;
+            name: string;
+        }
+        
+    - We can inherit interfaces like classes using the keyword "extends"
+        interface Worker extends Person {
+            jobTitle: string;
+        }
+        
+
+type
+----
+    - Used to create new type alias
+    - U can alias a new name to any already existing or custom types
+
+        type ID = string;
+        let userId: ID = "abc123";  // Here ID is nothing but "string" type 
+
+    - Can create object types. Can deliver the same functionalities of the interface.
+
+        type User = {
+            id: ID;
+            name: string;
+            age: number;
+        };
+
+        let user: User = {
+            id: "xyz456",
+            name: "John Doe",
+            age: 30
+        };
+
+    - Union types - can create our own custom types(Named types). It only accept the values we specified
+
+        type Status = "pending" | "completed" | "failed";
+        let taskStatus: Status = "pending";  // It will only accept that three strings
+    
+    - Intersection Types: You can combine multiple types into one using intersection types(&). It's almost like the inheriting a interface
+
+        type Contact = {
+            email: string;
+            phone?: string;
+        };
+
+        type UserWithContact = User & Contact;
+
+        let userWithContact: UserWithContact = {
+            id: "def789",
+            name: "Jane Smith",
+            age: 28,
+            email: "jane@example.com",
+            phone: "123-456-7890"
+        };
+    
+    - Function Types: You can define a type for functions.
+
+        type SumFunction = (a: number, b: number) => number;
+        const add: SumFunction = (x, y) => x + y;
+
+
+
+Union
+-----
+    -  A union type is a type that can be one of several types
+    - It allows us to specify that a value can be one of multiple types.
+    - basic syntax
+        let value: string | number;  // This value can be a string or number. both are acceptable
+    
+    - Union in array
+        let mixedArray: (string | number)[] = ["hello", 42, "world"];  // The elements can be a string or number
+
+    - Union with Objects
+        type UserOrContact = User & Contact;  // The UserOrContact can be a User object or Contact object
+    
+    - Union in functions
+        function printId(id: string | number): string | number{}  // The parameter and return value can be a string or number
+
+
+Optional
+--------
+    - To define an optional property by appending a question mark (?) to the property name in an interface or type alias.
+    - This is useful when you want to create objects where some properties are not always required.
+
+        interface User {
+            id: number;
+            name: string;
+            age?: number; // Optional property
+        }
+
+        const user1: User = {
+            id: 1,
+            name: "Alice",
+        };  // Not provided the age property. It's optional.
+
+        const user2: User = {
+            id: 2,
+            name: "Bob",
+            age: 30, // Optional property can be provided. When provided TS check for its type.
+        };
