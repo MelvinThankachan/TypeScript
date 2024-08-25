@@ -188,3 +188,179 @@ Optional
             name: "Bob",
             age: 30, // Optional property can be provided. When provided TS check for its type.
         };
+
+
+
+Function Overloading
+--------------------
+
+
+
+Generics
+--------
+    - It provide a way to create components or functions that can work with any data type while maintaining type safety.
+    - Generic Functions - A generic function that returns the first element of an array
+
+        function firstElement<T>(arr: T[]): T | undefined {
+        return arr[0];
+        }
+
+        console.log(firstElement([1, 2, 3]));  // Output: 1
+        console.log(firstElement(['a', 'b', 'c']));  // Output: 'a'
+    
+    - Generic Class - // A generic class for a container
+
+        class Container<T> {
+        private value: T;
+
+        constructor(value: T) {
+            this.value = value;
+        }
+
+        getValue(): T {
+            return this.value;
+        }
+        }
+
+        const numberContainer = new Container<number>(42);
+        console.log(numberContainer.getValue());  // Output: 42
+
+        const stringContainer = new Container<string>('hello');
+        console.log(stringContainer.getValue());  // Output: 'hello'
+
+
+
+Enums
+-----
+
+
+as const (type casting)
+-----------------------
+    - It make the variable only read only
+
+        let name = "melvin";  // its type is "string"
+        let name = "melvin" as const;  // its types is "melvin". this cant be changed to anything else.
+        const fruits = ["apple", "banana", "cherry"];  // we can change the values inside the array (fruits: string[])
+        const fruits = ["apple", "banana", "cherry"] as const; // We cant change the values, because its read only. (fruits: readonly ["apple", "banana", "cherry"])
+    
+    - Like "as const" we can give "as string" or any other type. That variable only accept only that type.
+
+
+keyof typeof
+------------
+
+
+Utility Types
+-------------
+    - Utility types in TypeScript are built-in generic types that help you perform common type transformations and manipulations.
+    - They provide a way to handle types more flexibly and concisely without needing to manually define complex types.
+    - Commonly use utility types are:
+
+        - Partial<T>
+            - Constructs a type with all properties of "T" set to optional.
+
+                interface User {
+                    name: string;
+                    age: number;
+                }
+
+                const updateUser: Partial<User> = {
+                    age: 30,
+                };
+
+
+        - Required<T>
+            - Constructs a type with all properties of "T" set to required.
+
+                interface User {
+                    name?: string;
+                    age?: number;
+                }
+
+                const user: Required<User> = {
+                    name: 'John',
+                    age: 30
+                };
+
+
+        - Readonly<T>
+            - Constructs a type with all properties of "T" set to readonly, preventing modification.
+
+                interface User {
+                    name: string;
+                    age: number;
+                }
+
+                const user: Readonly<User> = {
+                    name: 'John',
+                    age: 30
+                };
+
+                // user.age = 31; // Error: Index signature in type 'Readonly<User>' only permits reading property 'age'.
+
+
+        - Record<K, T>
+            - Constructs an object type with property keys of type "K" and values of type "T".
+
+
+        - Pick<T, K>
+            - Constructs a type by picking a set of properties "K" from type "T".
+
+                interface User {
+                    name: string;
+                    age: number;
+                    email: string;
+                }
+
+                type UserNameAndEmail = Pick<User, 'name' | 'email'>;
+
+                const user: UserNameAndEmail = {
+                    name: 'John',
+                    email: 'john@example.com'
+                };
+
+
+        - Omit<T, K>
+            - Constructs a type by omitting a set of properties "K" from type "T".
+
+                interface User {
+                    name: string;
+                    age: number;
+                    email: string;
+                }
+
+                type UserWithoutEmail = Omit<User, 'email'>;
+
+                const user: UserWithoutEmail = {
+                    name: 'John',
+                    age: 30
+                };
+
+
+        - Exclude<T, U>
+            -  Constructs a type by excluding from "T" all properties that are assignable to "U".
+
+                type A = 'a' | 'b' | 'c';
+                type B = 'a' | 'b';
+
+                type C = Exclude<A, B>; // 'c'
+
+
+        - Extract<T, U>
+            - Constructs a type by extracting from "T" all properties that are assignable to "U".
+
+                type A = 'a' | 'b' | 'c';
+                type B = 'a' | 'b';
+
+                type C = Extract<A, B>; // 'a' | 'b'
+
+
+any - A variable can be any type. Basically disables all type checking. Not recommended.
+unknown - Better than any. It means the variable is unknown. But we have to confirm the type before using that variable.
+never - To give as a return value where functions which never return a value or complete it process. Basically for infinite functions ro error throwing functions.
+void - When a function doesn't return any value we can assign void for that functions return value.
+null - It represent absence of a value. It more like a placeholder for future value. Explicit defining a absence of value.
+
+
+tsconfig.json
+-------------

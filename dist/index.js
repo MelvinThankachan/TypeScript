@@ -1,7 +1,6 @@
-let melvin = {
-    UserName: "Melvin",
-    age: 25,
-    phone: "8289991281",
-    address: { city: "Aluva", state: "Kerala", country: "India" },
+"use strict";
+const melvin = function (user) {
+    console.log(user);
+    return;
 };
-console.log(melvin);
+melvin("melvin");
