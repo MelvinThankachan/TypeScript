@@ -1,5 +1,5 @@
 .card-icon {
-    @apply text-2xl cursor-pointer transition-all duration-200 hover:scale-125;
+    @apply text-2xl cursor-pointer hover:scale-125 transition-all duration-200 ease-in-out;
 }
 
 /* styles.css */

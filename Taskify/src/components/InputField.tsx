@@ -10,12 +10,12 @@ const InputField = ({ toDo, setToDo, handleAdd }: InputFieldProps) => {
   return (
     <form
       action="#"
-      className="flex w-full relative items-center mb-5"
+      className="flex w-full relative items-center"
       onSubmit={handleAdd}
     >
       <input
-        className="w-full py-3 pl-3 pr-24 text-2xl border-none transition-all duration-200 outline-2 focus:outline focus:outline-white"
-        type="input"
+        className="w-full py-3 pl-3 pr-24 text-2xl border-none  break-words transition-all duration-200 outline-2 focus:outline focus:outline-white"
+        type="text"
         placeholder="Enter a task"
         value={toDo}
         onChange={(event) => setToDo(event.target.value)}
